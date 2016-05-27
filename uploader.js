@@ -4,7 +4,9 @@ module.exports = {
     console.log("Processing file", file);
 
     if (file.mimetype == 'application/zip') {
-      console.log('processing a zip file');
+      
+      console.log('processing a zip file');      
+
       return { success: true }
     }
     else
