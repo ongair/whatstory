@@ -1,5 +1,5 @@
 # What Story
 Application to storify WhatsApp conversations
 
-## Running
+### Running
     `npm start`
