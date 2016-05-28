@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
+app.use(express.static('public'));
+
 
 app.set('port', (process.env.PORT || 8081));
 
