@@ -27,7 +27,7 @@ app.post('/stories', upload.single('file'), function(req, res) {
 });
 
 app.post('/worker', function(req, res) {
-  console.log('Received job');
+  console.log('Received job : ', req.body);
   res.status(200).json({ success: true });
 });
 
@@ -36,7 +36,11 @@ app.get('/health', function(req, res) {
 });
 
 app.get('/stories/:id/status', function(req, res) {
-  uploader.status(req.params.id, res);
+  uploader.get(req.params.id, res);
+});
+
+app.get('/stories/:id', function(req, res) {
+  uploader.get(req.params.id, res);
 });
 
 app.get('/stories', function(req, res) {

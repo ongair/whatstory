@@ -64,11 +64,11 @@ module.exports = {
       res.status(500).json({ message: 'Not a zip file provided' });
   },
 
-  status: function(id, res) {
+  get: function(id, res) {
     stories
       .find(id)
       .then(function(story) {
-        res.status(200).json({ success: true, status: story.status });
+        res.status(200).json({ success: true, status: story.status, messages: story.messages });
       });
   },
 
