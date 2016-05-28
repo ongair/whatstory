@@ -28,6 +28,10 @@ app.post('/stories', upload.single('file'), function(req, res) {
 
 app.post('/worker', function(req, res) {
   console.log('Received job : ', req.body);
+
+  story = req.body.Key;
+  console.log("Key to process is ", story);
+
   res.status(200).json({ success: true });
 });
 
