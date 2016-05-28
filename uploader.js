@@ -176,26 +176,5 @@ module.exports = {
       date: date,
       text: text
     };
-  },
-
-  queue: function() {
-    console.log("About to queue jobs");
-    var self = this;
-    queue = consumer.create({
-      queueUrl: process.env.SQS_QUEUE_URL,
-      handleMessage: function(message, done) {
-        
-        self.process(message);
-
-        done();
-      }
-    });
-
-    queue.on('error', function(err) {
-      console.log("Error running the queue: ", err);
-    });
-
-    queue.start();
   }
-
 }
