@@ -38,28 +38,12 @@ module.exports = {
             console.log("Uploaded - Data: ", data);
 
             // save it to the stories table
-            stories.insert({ id: key, status: 'new' })
+            stories.insert({ id: key, status: 'new', created_at: new Date() })
               .then(function(response) {
                 res.status(200).json({ success: true, url: data['Location'], key: key });
               });            
           }
-        });
-      
-      // s3.listBuckets(function(err, data) {
-      //   if (err) { 
-      //     console.log("Error:", err); 
-      //     // return { success: false, message: err };
-      //     res.status(500).json({ message: err });
-      //   }
-      //   else {
-      //     for (var index in data.Buckets) {
-      //       var bucket = data.Buckets[index];
-      //       console.log("Bucket: ", bucket.Name, ' : ', bucket.CreationDate);
-      //     }
-      //     // return { success: true };
-      //     res.status(200).json({ success: true });
-      //   }
-      // });      
+        });     
     }
     else
       res.status(500).json({ message: 'Not a zip file provided' });
@@ -69,7 +53,6 @@ module.exports = {
     stories
       .find(id)
       .then(function(story) {
-        // console.log(land);
         res.status(200).json({ success: true, status: story.status });
       });
   },
