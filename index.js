@@ -31,6 +31,10 @@ app.post('/worker', function(req, res) {
   res.status(200).json({ success: true });
 });
 
+app.get('/health', function(req, res) {
+  res.status(200).json({ success: true });
+});
+
 app.get('/stories/:id/status', function(req, res) {
   uploader.status(req.params.id, res);
 });
