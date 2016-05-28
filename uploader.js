@@ -1,7 +1,6 @@
 var aws = require('aws-sdk');
 var rand = require("random-key");
 var fs = require('fs');
-var consumer = require('sqs-consumer');
 var Zip = require('adm-zip');
 
 var credentials = {
