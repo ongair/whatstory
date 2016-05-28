@@ -54,7 +54,19 @@ module.exports = {
             // save it to the stories table
             stories.insert({ id: key, status: 'new', created_at: new Date() })
               .then(function(response) {
-                res.status(200).json({ success: true, url: data['Location'], key: key });
+
+                // send a message to SQS
+                var sqs = new aws.SQS();
+                var msg = { Key: key };
+                var params = { MessageBody: JSON.stringify(msg), QueueUrl: process.env.SQS_QUEUE_URL };
+
+                sqs.sendMessage(params, function(err, data) {
+                  if (err)
+                    console.log("Error posting to SQS", err);
+                  else {
+                    res.status(200).json({ success: true, url: data['Location'], key: key });
+                  }
+                });                
               });            
           }
         });     
@@ -80,8 +92,7 @@ module.exports = {
   },
 
 
-  process: function(message) {
-    story_id = message['Body'];
+  process: function(story_id, res) {
     console.log("Processing : ", story_id); 
 
     var self = this;
@@ -97,7 +108,10 @@ module.exports = {
           s3.getObject({ Bucket: process.env.S3_BUCKET, Key: story_id + ".zip" },
             function(err, data) {
               if (err)
+              {
                 console.log("Error: ", err);
+                res.status(500).json({ success: false, error: err, message: 'Failed when getting S3 item'});
+              }
               else {
                 
                 // console.log("Data: ", data);
@@ -116,13 +130,17 @@ module.exports = {
                         var end = new Date();
                         var duration = (end - start)/1000;    
                         console.log("Processed in " + duration + " seconds");
+
+                        res.status(200).json({ success: true, duration: duration });
                       });
                     
                   }
                 });
               }
             });
-        }
+        } 
+        else
+          res.status(200).json({ success: true });
       });
   },
 
