@@ -19,7 +19,8 @@ app.set('port', (process.env.PORT || 8081));
 app.post('/stories', upload.single('file'), function(req, res) {  
   if (req.file != null) {
     upload = req.file;
-    uploader.process(upload, res);
+    uploader.upload(upload, res);
+    // res.status(200).json({ success: true });
   }
   else
     res.status(422).json({ error: 'No export file was provided'}); 

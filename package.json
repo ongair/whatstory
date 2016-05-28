@@ -10,11 +10,13 @@
   "author": "Ongair",
   "license": "GPL-3.0",
   "dependencies": {
+    "adm-zip": "^0.4.7",
     "aws-sdk": "^2.3.16",
     "body-parser": "^1.15.1",
     "dynasty": "^0.2.4",
     "express": "^4.13.4",
     "multer": "^1.1.0",
-    "random-key": "^0.3.2"
+    "random-key": "^0.3.2",
+    "sqs-consumer": "^3.1.3"
   }
 }
