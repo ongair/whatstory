@@ -26,6 +26,11 @@ app.post('/stories', upload.single('file'), function(req, res) {
     res.status(422).json({ error: 'No export file was provided'}); 
 });
 
+app.post('/worker', function(req, res) {
+  console.log('Received job');
+  res.status(200).json({ success: true });
+});
+
 app.get('/stories/:id/status', function(req, res) {
   uploader.status(req.params.id, res);
 });
