@@ -72,9 +72,29 @@ $(function() {
   });
 
   var Story = React.createClass({
+    getInitialState: function() {
+      return {
+        status: 'new'
+      };
+    },
+    componentDidMount: function() {
+      // debugger;
+      var id = this.props.params.id;      
+      var self = this;
+
+      $.getJSON("/stories/" + id, function(data) {
+        console.log("Story ", data);
+        self.setState({ status: data.status, messages: data.messages });
+      });
+    },
     render: function() {
+      console.log('About to render the story');
       return (
-        <div />
+        <div className="container">
+          <div className="row heading">
+            
+          </div>
+        </div>
       );
     }
   });
