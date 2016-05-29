@@ -3,61 +3,69 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>WhatStory : Tell your Story</title>
+    <title>Storify for WhatsApp : Tell your WhatsApp Story</title>
     <meta name="author" content="Ongair">
     <meta name="description" content="Storify your WhatsApp conversation">
     <meta name="keywords" content="WhatsApp,Storify">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css' />
-    <link href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css" rel="stylesheet" type='text/css' />
+    <link href='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css' rel='stylesheet' type='text/css' />
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
     
   </head>
   
   <body>
 
-    <form ng-app="StoryApp" ng-controller="StoryController as story" action="/stories" method="POST" enctype='multipart/form-data' class="upload">  
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Working Title</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#">Stories</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#">About</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+
+    <div id="main">
+      <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+          <br><br>
+          <h1 class="header center orange-text">Working Title</h1>
+          <div class="row center">
+            <h5 class="header col s12 light">Storify your WhatsApp conversations</h5>
+          </div>
+          <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+          </div>
+          <br><br>
+        </div>
+      </div>
+    </div>
+    
+<!--     <form action="/stories" method="POST" enctype='multipart/form-data' class="upload">  
       <label for="file">Select the WhatsApp export zip file to upload</label>
-      <input id="file" type="file" required ng-model="story.file" accept=".zip" />
-      <md-button class="md-raised md-primary" ng-click="story.upload()">Upload</md-button>
+      <input id="file" type="file" required accept=".zip" />
+      <input type="submit" value="Upload" />
     </form>
+ -->
+    <footer class="page-footer orange">
+      <div class="footer-copyright">
+        <div class="container">
+        Made by <a class="orange-text text-lighten-3" href="//ongair.im">Ongair</a>
+        </div>
+      </div>
+    </footer>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-animate.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-aria.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-messages.min.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/react-router/2.4.1/ReactRouter.min.js"></script>    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>    
     <script type="text/javascript" src="/assets/js/app.js"></script>
-
-    <script type="text/javascript">
-      var StoryApp = angular.module('StoryApp', ['ngMaterial']);
-
-      StoryApp.controller('StoryController', function() {
-
-        this.file = null;
-        var self = this;
-        this.upload = function upload() {
-          console.log('Clicked upload');
-          // debugger;
-        }
-      });
-
-      // StoryApp.directive('file')
-      StoryApp.service('fileUpload', ['$http', function ($http) {
-        this.uploadFileToUrl = function(file, uploadUrl){
-          var fd = new FormData();
-          fd.append('file', file);
-            
-          $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': 'application/json'}
-           })
-           .success(function(){
-           })      
-           .error(function(){
-            });
-          }
-      }]);
-    </script>
+   
   </body>
 </html>

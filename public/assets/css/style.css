@@ -2,7 +2,25 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-form.upload {
+/*form.upload {
   width: 50%;
   margin: 25% auto;
+}*/
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
 }
+
+/*.color.primary {
+  background-color: #f94263;
+}
+
+.color.secondary {
+  background-color: #ff9966;
+}
+
+.color.secondary_text {
+  color: #ff9966;
+}*/

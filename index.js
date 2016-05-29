@@ -19,8 +19,12 @@ app.set('port', (process.env.PORT || 8081));
 app.post('/stories', upload.single('file'), function(req, res) {  
   if (req.file != null) {
     upload = req.file;
-    uploader.upload(upload, res);
-    // res.status(200).json({ success: true });
+
+    // fake the upload for dev purposes
+    if (process.env.NODE_ENV == 'development')
+      res.status(200).json({ success: true, key: 'fPWAoWMsMXQag7xa' });
+    else
+      uploader.upload(upload, res);    
   }
   else
     res.status(422).json({ error: 'No export file was provided'}); 
@@ -52,4 +56,5 @@ app.get('/stories', function(req, res) {
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
+  console.log("Environment: ", process.env.NODE_ENV);
 });
