@@ -5,6 +5,7 @@ $(function() {
   window.Route = ReactRouter.Route;
   window.IndexRoute = ReactRouter.IndexRoute;
   window.hashHistory = ReactRouter.hashHistory;
+  window.browserHistory = ReactRouter.browserHistory;
   window.Link = ReactRouter.Link;
   window.IndexLink = ReactRouter.IndexLink;
 
@@ -64,12 +65,24 @@ $(function() {
   var Stories = React.createClass({
     render: function() {
       return (
+        <div className="container">
+        </div>
+      );
+    }
+  });
+
+  var Story = React.createClass({
+    render: function() {
+      return (
         <div />
       );
     }
   });
 
   var NewStory = React.createClass({
+    contextTypes: {
+      router: React.PropTypes.object
+    },
     uploadStory: function(evt) {
       console.log('Ready to upload');
       evt.preventDefault();
@@ -79,6 +92,9 @@ $(function() {
       data.append('email', $('#email').val())
       data.append('file', $('#file')[0].files[0]);
 
+      $('#upload-btn').addClass('disabled');
+      var router = this.context.router;
+
       $.ajax({
         url: '/stories',
         data: data,
@@ -87,8 +103,10 @@ $(function() {
         contentType: false,
         processData: false,
         success: function(data, status, xhr) {
-          console.log("Response is ", data);
-          console.log("Completed upload");
+          var path = "/stories/" + data.key + "/";
+
+          console.log("Redirect to ", path);
+          router.push(path);
         },
         error: function(xhr, status, error) {
           console.log("Error : ", error);
@@ -108,7 +126,7 @@ $(function() {
             <form id="upload-form" onSubmit={ this.uploadStory } method="POST" action="/stories" className="col s6 offset-s3">
               <div className="row">
                 <div className="input-field col s12">
-                  <input id="email" type="email" value="trevor@ongair.im" className="validate" placeholder="We require your email address before publishing" />
+                  <input id="email" type="email" className="validate" placeholder="We require your email address before publishing" />
                   <label className="active" for="email">Email</label>
                 </div>
               </div>
@@ -125,7 +143,21 @@ $(function() {
               </div>
               <div className="row">
                 <div className="input-field col s12">
-                  <button className="btn-large btn-float-right waves-effect waves-light red">Upload</button>
+                  <div className="preloader-wrapper medium">
+                    <div className="spinner-layer spinner-blue-only">
+                      <div className="circle-clipper left">
+                        <div className="circle"></div>
+                      </div>
+                      <div className="gap-patch">
+                        <div className="circle"></div>
+                      </div>
+                      <div className="circle-clipper right">
+                        <div className="circle"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button id='#upload-btn' className="btn-large btn-float-right waves-effect waves-light red">Upload</button>
                 </div>
               </div>
             </form>
@@ -168,7 +200,8 @@ $(function() {
           <Route path="stories" component={ Stories } >            
           </Route>
 
-          <Route path="stories/new" component={ NewStory } />
+          <Route path="stories/new" component={ NewStory } router={this} />
+          <Route path="stories/:id/" component= { Story } router={this} />
 
           <Route path="about" component={ About } /> 
         </Route>
